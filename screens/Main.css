@@ -2,7 +2,7 @@
     align-self: center;
     width: 80%;
     height: 100%;
-    background-color: cornflowerblue;
+    background-color: rgb(190, 214, 255);
 
 }
 .message-part{
@@ -10,7 +10,7 @@
     height: 40%;
     display: flex;
     flex-direction: row;
-    background-color: cadetblue;
+    /* background-color: cadetblue; */
 }
 .message-left{
     width: 50%;
@@ -22,11 +22,12 @@
     justify-content: center;
 }
 .message-right{
+
     width: 50%;
     height: 100%;
     display: flex;
     flex-direction: column;
-    background-color:grey;
+    /* background-color:grey; */
     align-items: center;
     justify-content: center;
 }
@@ -44,3 +45,33 @@
     align-items: center;
     justify-content: center;
 }
+
+.btn-send{
+    align-self: center;
+    justify-self: center;
+}
+/* 
+.card{
+    background-color: rgb(151, 169, 202);
+    border-radius: 20px;
+    margin: 10px;
+} */
+
+.control-part{
+    background-color: rgb(61, 103, 182);
+    width: 100%;
+    height: 60%;
+    display: flex;
+    flex-direction: row;
+}
+.light-part{
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(212, 161, 176);
+    align-items: center;
+    justify-content: center;
+}
+
+
