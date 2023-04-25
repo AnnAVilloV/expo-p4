@@ -16,6 +16,7 @@ import humi from '../images/Humidity.png'
 
 
 
+
   const Add = ({ user }) => {
   
     const [text, setText] = useState("");
@@ -266,6 +267,6 @@ const styles = StyleSheet.create({
       flex: 1,
       alignItems: 'center',
       justifyContent: 'center',
-      backgroundColor: 'hsl(${hueValue}, ${satValue(*100 if btw 0 and 1)}%, ${briValue (*100 if btw 0 and 1) }% )'
+      backgroundColor: ''
     },
   });
