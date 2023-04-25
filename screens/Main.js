@@ -186,11 +186,13 @@ export default function Main({navigation}){
             </div>
             <div className='control-part'>
                 <div className='light-part'>
+                   <div style={styles.bgColor}></div>
+
                 <IntegerStep feature = "Hue" limit = {360} onChange={hueSet}/>
                 <IntegerStep feature = "Saturation" limit = {100} onChange={satSet}/>
                 <IntegerStep feature = "Brightness" limit = {100} onChange={briSet}/>
                 <Button style={{marginBottom:'5%'}} type="primary" onClick={()=>{
-
+                  console.log(hueValue+ " "+satValue+" "+briValue)
                 }}>Check the Color</Button>
 
                 <Button type="primary" onClick={() => {
@@ -215,7 +217,7 @@ export default function Main({navigation}){
                         type: "int",
                         integer: briValue
                     });
-                    console.log(hueValue+ " "+satValue+" "+briValue)
+                    
                     
 
                 }}>Change the Light</Button>
@@ -260,10 +262,10 @@ export default function Main({navigation}){
 }
 
 const styles = StyleSheet.create({
-    container: {
+    bgColor: {
       flex: 1,
-    //   backgroundColor: '#fff',
       alignItems: 'center',
       justifyContent: 'center',
+      backgroundColor: 'hsl(${hueValue}, ${satValue(*100 if btw 0 and 1)}%, ${briValue (*100 if btw 0 and 1) }% )'
     },
   });
