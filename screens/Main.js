@@ -10,7 +10,10 @@ import { ref, push, serverTimestamp, query, orderByChild, equalTo, limitToLast }
 import { httpsCallable } from 'firebase/functions';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useList } from 'react-firebase-hooks/database';
-import { firebaseToken, auth, database, functions } from '../Firebase'
+import { firebaseToken, auth, database, functions } from '../Firebase';
+import tem from '../images/temprature.png'
+import humi from '../images/Humidity.png'
+
 
 
   const Add = ({ user }) => {
@@ -97,39 +100,32 @@ import { firebaseToken, auth, database, functions } from '../Firebase'
     );
   }) 
   
-//   const IntegerStep = (props) => {
-   
 
-//     const [inputValue, setInputValue] = useState(1);
-//     const onChange = (newValue) => {
-//       setInputValue(newValue);
-//     };
-//     return (
-//       <Row style={{width:'100%',marginLeft:'20%',marginBottom:'5%'}}>
-//         <Col style={{width:'15%',marginTop:'1%'}}>
-//             <Text>{props.feature}</Text>
-//         </Col>
-//         <Col style={{width:'50%'}}>
-//           <Slider
-//             min={0}
-//             max={props.limit}
-//             onChange={onChange}
-//             value={typeof inputValue === 'number' ? inputValue : 0}
-//           />
-//         </Col>
-//         <Col >
-//           <InputNumber 
-//             style={{
-//               margin: '0 16px',
-//             }}
-//             value={inputValue}
-//             onChange={onChange}
-//           />
-//         </Col>
-//       </Row>
+const DisplayData = (props) => {
 
-//     );
-//   };
+  return(
+
+    <Col>
+      <Row className='display-row'>
+        <img src={tem} className='icon-font'></img>
+        <text className='text'>Outside </text>
+      </Row>
+      <Row className='display-row'>
+        <img src={tem} className='icon-font'></img>
+        <text className='text'>Inside</text>
+        </Row>
+      <Row className='display-row'>
+        <img src={humi} className='icon-font'></img>
+        <text className='text'>Outside</text>
+        </Row>
+      <Row className='display-row'>
+        <img src={humi} className='icon-font'></img>
+        <text className='text'>Inside</text>
+        </Row>
+    </Col>
+  );
+}  
+
 
 export default function Main({navigation}){
     const [user, authLoading, authError] = useAuthState(auth);
@@ -164,9 +160,10 @@ export default function Main({navigation}){
     
       const [snapshots, dbLoading, dbError] = useList(user ? query(ref(database, 'data'), orderByChild('groupId'), equalTo(20), limitToLast(3)) : null);
     
-      const [snapshots2, dbLoading2, dbError2] = useList(user ? query(ref(database, 'data'), orderByChild('groupId'), equalTo(21), limitToLast(1)) : null);
-      const [snapshots3, dbLoading3, dbError3] = useList(user ? query(ref(database, 'data'), orderByChild('groupId'), equalTo(22), limitToLast(1)) : null);
-      const [snapshots4, dbLoading4, dbError4] = useList(user ? query(ref(database, 'data'), orderByChild('groupId'), equalTo(23), limitToLast(1)) : null);
+      const [temOut, dbLoading2, dbError2] = useList(user ? query(ref(database, 'data'), orderByChild('groupId'), equalTo(1), limitToLast(1)) : null);
+      const [temIn, dbLoading3, dbError3] = useList(user ? query(ref(database, 'data'), orderByChild('groupId'), equalTo(2), limitToLast(1)) : null);
+      const [humiOut, dbLoading4, dbError4] = useList(user ? query(ref(database, 'data'), orderByChild('groupId'), equalTo(11), limitToLast(1)) : null);
+      const [humiIn, dbLoading5, dbError5] = useList(user ? query(ref(database, 'data'), orderByChild('groupId'), equalTo(12), limitToLast(1)) : null);
 
 
 
@@ -192,6 +189,10 @@ export default function Main({navigation}){
                 <IntegerStep feature = "Hue" limit = {360} onChange={hueSet}/>
                 <IntegerStep feature = "Saturation" limit = {100} onChange={satSet}/>
                 <IntegerStep feature = "Brightness" limit = {100} onChange={briSet}/>
+                <Button style={{marginBottom:'5%'}} type="primary" onClick={()=>{
+
+                }}>Check the Color</Button>
+
                 <Button type="primary" onClick={() => {
                     push(ref(database, "data"), {
                         userId: user.uid,
@@ -219,18 +220,37 @@ export default function Main({navigation}){
 
                 }}>Change the Light</Button>
                 </div>
-                <div>
-                {/* <div className='message-right'>
-                        {snapshots2 ?
-                        <Messages messages={snapshots2.map(el => el?.val()?.integer ?? '')}></Messages>
+                <div  className='display-box'>
+                  <Col>
+                    <Row className='display-row'>
+                      <img src={tem} className='icon-font'></img>
+                      <Text style={{ marginLeft:'5%', color: 'white', fontSize:'x-large', marginTop:'5%'}}>Outside</Text>
+                      {temOut ?
+                      <Text style={{fontWeight:'bold', marginLeft:'5%', color: 'white', fontSize:'x-large', marginTop:'5%'}}>{temOut.map(el => el?.val()?.integer ?? '')}</Text>
                         : null}
-                        {snapshots3 ?
-                        <Messages messages={snapshots3.map(el => el?.val()?.integer ?? '')}></Messages>
+                    </Row>
+                    <Row className='display-row'>
+                      <img src={tem} className='icon-font'></img>
+                      <Text style={{ marginLeft:'5%', color: 'white', fontSize:'x-large', marginTop:'5%'}}>Inside</Text>
+                      {temIn ?
+                      <Text style={{fontWeight:'bold', marginLeft:'5%', color: 'white', fontSize:'x-large', marginTop:'5%'}}>{temIn.map(el => el?.val()?.integer ?? '')}</Text>
                         : null}
-                        {snapshots4 ?
-                        <Messages messages={snapshots4.map(el => el?.val()?.integer ?? '')}></Messages>
+                      </Row>
+                    <Row className='display-row'>
+                      <img src={humi} className='icon-font'></img>
+                      <Text style={{ marginLeft:'5%', color: 'white', fontSize:'x-large', marginTop:'5%'}}>Outside</Text>
+                      {humiOut ?
+                      <Text style={{fontWeight:'bold', marginLeft:'5%', color: 'white', fontSize:'x-large', marginTop:'5%'}}>{humiOut.map(el => el?.val()?.integer ?? '')}</Text>
                         : null}
-                </div> */}
+                      </Row>
+                    <Row className='display-row'>
+                      <img src={humi} className='icon-font'></img>
+                      <Text style={{ marginLeft:'5%', color: 'white', fontSize:'x-large', marginTop:'5%'}}>Inside</Text>
+                      {humiIn ?
+                      <Text style={{fontWeight:'bold', marginLeft:'5%', color: 'white', fontSize:'x-large', marginTop:'5%'}}>{humiIn.map(el => el?.val()?.integer ?? '')}</Text>
+                        : null}
+                      </Row>
+                  </Col>
 
                 </div>
             </div>

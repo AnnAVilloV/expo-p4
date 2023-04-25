@@ -21,16 +21,16 @@
     align-items: center;
     justify-content: center;
 }
-.message-right{
+/* .message-right{
 
     width: 50%;
     height: 100%;
     display: flex;
     flex-direction: column;
     /* background-color:grey; */
-    align-items: center;
+    /* align-items: center;
     justify-content: center;
-}
+} */ 
 
 .header-box{
     width: 100%;
@@ -73,5 +73,21 @@
     align-items: center;
     justify-content: center;
 }
+.display-box{
+    padding-top: 8%;
+    padding-left: 4%;
+    /* background-color: blueviolet; */
+}
+
+.display-row{
+    margin-top: 5%;
+    /* background-color: rgb(154, 151, 175); */
+}
+
+.icon-font{
+    width: 15%;
+    height: 15%;
+}
+
 
 
