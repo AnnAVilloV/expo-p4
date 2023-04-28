@@ -136,6 +136,8 @@ export default function Main({navigation}){
     const [satValue, setSatValue] = useState(0);
     const [briValue, setBriValue] = useState(0);
 
+    const [hexValue, setHex] = useState(0);
+
     const hueSet = (val) => {
         setHueValue(val)
     }
@@ -186,17 +188,21 @@ export default function Main({navigation}){
                 </div>
             </div>
             <div className='control-part'>
-                <div className='light-part'>
-                   <div style={styles.bgColor}></div>
 
-                <IntegerStep feature = "Hue" limit = {360} onChange={hueSet}/>
+                <div className='light-part'>
+                  <div>
+                    <div style={{...styles.bgColor, width:'100px',height:'100px',borderRadius:'50%', backgroundColor: `hsl(${hueValue},${satValue}%,${briValue}%)`}}></div>
+                  </div>
+
+
+
+                <IntegerStep feature = "Hue" limit = {360} onChange={hueSet} />
                 <IntegerStep feature = "Saturation" limit = {100} onChange={satSet}/>
                 <IntegerStep feature = "Brightness" limit = {100} onChange={briSet}/>
-                <Button style={{marginBottom:'5%'}} type="primary" onClick={()=>{
-                  console.log(hueValue+ " "+satValue+" "+briValue)
-                }}>Check the Color</Button>
 
                 <Button type="primary" onClick={() => {
+                    console.log(hueValue+ " "+satValue+" "+briValue)
+
                     push(ref(database, "data"), {
                         userId: user.uid,
                         groupId: 21,
@@ -262,11 +268,28 @@ export default function Main({navigation}){
     )
 }
 
+const getHex = (h,s,l) => {
+  l /= 100;
+  const a = s * Math.min(l, 1 - l) / 100;
+  const f = n => {
+    const k = (n + h / 30) % 12;
+    const color = l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
+    return Math.round(255 * color).toString(16).padStart(2, '0');   // convert to Hex and prefix "0" if needed
+  };
+  if(h==0 && s==0 && l==0)
+    return '#ffffff';
+  return `#${f(0)}${f(8)}${f(4)}`;
+}
+
 const styles = StyleSheet.create({
     bgColor: {
       flex: 1,
       alignItems: 'center',
       justifyContent: 'center',
-      backgroundColor: ''
+      marginBottom:'50px',
+      // width:'100px',
+      // height: '50%',
+
+      // backgroundColor: getHex()
     },
   });
