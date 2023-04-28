@@ -94,6 +94,7 @@ import humi from '../images/Humidity.png'
             ref = {ref}
             value={inputValue}
             onChange={onChange}
+            
           />
         </Col>
       </Row>
