@@ -11,7 +11,7 @@ export default function Navione(){
             <Stack.Screen
                 name="Main"
                 component={Main}
-                options={{ title: 'Main title'}}
+                options={{ title: 'GFB Museum'}}
             />
         </Stack.Navigator>
     )
